@@ -2,6 +2,7 @@ var http = require("http");
 var handler = require("./request-handler");
 var httpHelpers = require("./http-helpers");
 var url = require('url');
+var archive = require('../helpers/archive-helpers');
 
 var port = 8080;
 var ip = "127.0.0.1";

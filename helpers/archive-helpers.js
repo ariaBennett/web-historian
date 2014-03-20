@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
+var archive = this;
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -25,10 +26,25 @@ exports.initialize = function(pathsObj){
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
-exports.readListOfUrls = function(){
+exports.readListOfUrls = function(callback){
+  fs.readFile(path.join(__dirname, '../archives/sites.txt'), function(err, data){
+    if (err) {
+      callback(null);
+    }
+    data = "" + data;
+    console.log("data", data);
+    callback(data);
+  });
 };
 
-exports.isUrlInList = function(){
+exports.isUrlInList = function(url, callback){
+  archive.readListOfUrls(function(data){
+    if(data.indexOf(url) !== -1){
+      callback(true);
+    } else {
+      callback(false);
+    }
+  });
 };
 
 exports.addUrlToList = function(){

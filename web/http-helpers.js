@@ -2,7 +2,6 @@ var path = require('path');
 var fs = require('fs');
 var archive = require('../helpers/archive-helpers');
 
-
 exports.sendResponse = function(response, object, status){
   var headers = {
     "access-control-allow-origin": "*",
@@ -11,6 +10,11 @@ exports.sendResponse = function(response, object, status){
     "access-control-max-age": 10, // Seconds.
     'Content-Type': "text/html"
   };
+  //read file
+
+  //compare files
+
+  //if fails then status should be 404
   status = status || 200;
   response.writeHead(status, headers);
   response.end(JSON.stringify(object));
