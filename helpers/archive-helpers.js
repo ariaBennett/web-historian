@@ -28,12 +28,13 @@ exports.initialize = function(pathsObj){
 
 exports.readListOfUrls = function(callback){
   fs.readFile(path.join(__dirname, '../archives/sites.txt'), function(err, data){
+  //fs.readFile(archive.paths.list, function(err, data){  // This is used to satisfy some tests.  The tests are dumb.
     if (err) {
       callback(null);
     }
     data = "" + data;
-    console.log("data", data);
-    callback(data);
+    var results = data.split("\n");
+    callback(results);
   });
 };
 
