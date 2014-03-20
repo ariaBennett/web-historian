@@ -11,7 +11,6 @@ var routes = {
 };
 
 var router = function(req, res) {
-
   var parsedUri = url.parse(req.url);
   var path = parsedUri.pathname;
   if(routes[path] === undefined){

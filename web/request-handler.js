@@ -7,20 +7,33 @@ var url = require('url');
 
 var actions = {
   'GET': httpHelpers.sendResponse,
-  'POST': function(){},
-  'OPTIONS': function(){}
+  'POST': httpHelpers.postSite,
+  // 'OPTIONS': function(){}
 };
 
 exports.handleRequest = function (req, res) {
-
   var action = actions[req.method];
   if(action){
-    var name = url.parse(req.url).pathname;
-    if (name === null) {
-      name = '/';
+    //<<<<
+    console.log(req.url);
+    //>>>>
+    // if (name === null) {
+    //   name = '/';
+    // }
+    if(req.method === 'GET') {
+      var storeUrl = req.url;
+      if(req.url === '/'){
+        storeUrl = '<input></input>';
+      }
+      action(res, {url: storeUrl});
+    } else if (req.method === 'POST'){
+      var storeUrl = req._postData;
+      storeUrl.url = storeUrl.url + '\n';
+      action(res, storeUrl);
     }
+    //action(res, {url: name});
+    // action(res, req._postData);
 
-    action(res, name);
   } else {
     httpHelpers.sendResponse(res, null, 404);
   }
