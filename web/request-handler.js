@@ -32,8 +32,23 @@ exports.handleRequest = function (req, res) {
       }
     } else if (req.method === 'POST'){
       req.on('data', function(data){
+        // get url name
         var urlName = data + '';
         urlName = urlName.slice(4);
+
+        // check if url name in list
+        archive.isUrlInList(urlName, function(resultInList){
+          // if in list, check if it's ready
+          if(resultInList){
+            // if it's ready, serve the cache
+            // if it's not ready, show loading page
+          }
+          // if not in list
+          else if (!resultInList){
+            // add to list
+            // display loading page
+          }
+        });
       });
     }
 
