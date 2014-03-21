@@ -31,3 +31,8 @@ var server = http.createServer(router);
 console.log("Listening on http://" + ip + ":" + port);
 server.listen(port, ip);
 
+
+var req = {
+  method: "POST",
+  url: "www.happyhats.com"
+};

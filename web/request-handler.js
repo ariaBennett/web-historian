@@ -16,11 +16,9 @@ exports.handleRequest = function (req, res) {
   if(action){
 
     if(req.method === 'GET') {
-      // var parsedUri = url.parse(req.url);
-      // var path = parsedUri.pathname;
       var storeUrl = url.parse(req.url).pathname;
       if(storeUrl === '/'){
-        action(res, {url: '<input></input>'});
+        httpHelpers.serveAssets(res, './public/index.html');
       } else {
         storeUrl = storeUrl.slice(1);
         archive.isUrlInList(storeUrl, function(result){
@@ -30,11 +28,13 @@ exports.handleRequest = function (req, res) {
             httpHelpers.sendResponse(res, null, 404);
           }
         });
+
       }
     } else if (req.method === 'POST'){
-      var storeUrl = req._postData;
-      storeUrl.url = storeUrl.url + '\n';
-      action(res, storeUrl);
+      req.on('data', function(data){
+        var urlName = data + '';
+        urlName = urlName.slice(4);
+      });
     }
 
   }

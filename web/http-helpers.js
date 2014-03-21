@@ -1,6 +1,7 @@
 var path = require('path');
 var fs = require('fs');
 var archive = require('../helpers/archive-helpers');
+var helpers = this;
 
 exports.sendResponse = function(response, object, status){
   var headers = {
@@ -17,7 +18,7 @@ exports.sendResponse = function(response, object, status){
   //if fails then status should be 404
   status = status || 200;
   response.writeHead(status, headers);
-  response.end(JSON.stringify(object));
+  response.end(object);
 };
 
 //<<<<
@@ -33,16 +34,21 @@ exports.postSite = function(response, object, status){
   status = status || 302;
 
 
-  fs.appendFile(archive.paths.list, object.url);
+  fs.appendFile(archive.paths.list, object);
   response.writeHead(status, headers);
   response.end(JSON.stringify(object));
 
 };
-//>>>>
 
 exports.serveAssets = function(res, asset) {
-  // Write some code here that helps serve up your static files!
-  // (Static files are things like html (yours or archived from others...), css, or anything that doesn't change often.)
+  fs.readFile(path.join(__dirname, asset), function(err, data){
+    if(err) {
+      helpers.sendResponse(res, null, 404);
+    } else {
+      console.log("serveAssets", data);
+
+    }
+    helpers.sendResponse(res, data);
+  });
 };
 
-// As you progress, keep thinking about what helper functions you can put here!
